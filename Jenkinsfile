@@ -1,29 +1,35 @@
 pipeline {
     agent any
+
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checkout stage'
+                checkout scm
             }
         }
+
         stage('Build') {
             steps {
-                echo 'Build stage'
+                sh 'javac Hello.java'
             }
         }
+
         stage('Test') {
             steps {
-                echo 'Test stage'
+                sh 'java Hello'
             }
         }
     }
 
     post {
         success {
-            echo 'BUILD SUCCESSFUL'
+            echo 'CI PIPELINE SUCCESS'
         }
         failure {
-            echo 'BUILD FAILED'
+            echo 'CI PIPELINE FAILED'
+        }
+        always {
+            archiveArtifacts artifacts: '*.class'
         }
     }
 }
