@@ -6,27 +6,15 @@ on:
       - main
 
 jobs:
-  build:
+  job-a:
     runs-on: ubuntu-latest
-
-    env:
-      USERNAME: Jordan   # 👈 HERE
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Job A step
+        run: echo "This is Job A"
 
-      - name: Print parameter
-        run: echo "Username is $USERNAME"
-
-      - name: Compile Java
-        run: javac Hello.java
-
-      - name: Run Java program
-        run: java Hello
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: java-class
-          path: Hello.class
+  job-b:
+    needs: job-a
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job B step
+        run: echo "This is Job B (triggered after Job A)"
