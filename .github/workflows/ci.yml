@@ -9,15 +9,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      USERNAME: Jordan   # 👈 HERE
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      - name: Print parameter
+        run: echo "Username is $USERNAME"
 
       - name: Compile Java
         run: javac Hello.java
